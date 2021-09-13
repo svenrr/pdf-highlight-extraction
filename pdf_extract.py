@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 # Based on https://stackoverflow.com/a/62859169/562769
+# Credits to: https://github.com/pymupdf/PyMuPDF/issues/318#issuecomment-657102559 (edxu96 & JorjMcKie)
+
 
 from typing import List, Tuple
 
@@ -34,15 +36,25 @@ def handle_page(page):
     return highlights
 
 
+def save_txt(highlights: list, filepath: str):
+    filename = filepath.split("/")[-1]
+    lines = highlights
+    
+    with open(f'{filename}.txt', 'w') as f:
+        for line in lines:
+            f.write("- " + line)
+            f.write('\n')
+
 def main(filepath: str) -> List:
     doc = fitz.open(filepath)
 
     highlights = []
     for page in doc:
         highlights += handle_page(page)
-
+        
+    save_txt(highlights, filepath)
     return highlights
 
 
-if __name__ == "__main__":
-    print(main("Early Retirement SWR - test.pdf"))
+#if __name__ == "__main__":
+#    print(main("Early Retirement SWR - test.pdf"))

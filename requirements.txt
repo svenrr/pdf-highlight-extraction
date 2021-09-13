@@ -1,0 +1,2 @@
+fitz==0.0.1.dev2
+PySimpleGUI==4.47.0
